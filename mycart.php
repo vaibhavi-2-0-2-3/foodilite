@@ -442,7 +442,7 @@
     </div>
   </div>
 
-  <script>
+  <!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
       var quantityInput = document.querySelector('.quantity-input');
       var addToCartButton = document.querySelector('.add-to-cart-button');
@@ -469,7 +469,7 @@
 
       document.querySelector('form').submit();
     }
-  </script>
+  </script> -->
 
 
 </body>
