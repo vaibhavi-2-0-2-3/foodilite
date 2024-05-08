@@ -1,97 +1,3 @@
-<?php
-session_start(); // Start the session to access user data
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "food";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addToCart"])) {
-  $foodItemId = $_POST["foodItemId"];
-  $quantity = $_POST["quantity"];
-
-  // Add the selected item to the cart
-  $_SESSION['cart'][] = array(
-    'foodItemId' => $foodItemId,
-    'quantity' => $quantity
-  );
-
-  // Optional: Redirect the user to the same page to avoid form resubmission
-  header("Location: {$_SERVER['PHP_SELF']}");
-  exit();
-}
-
-// Function to get the item details based on the foodItemId
-function getFoodItemDetails($foodItemId)
-{
-  global $conn;
-  $sql = "SELECT * FROM menu WHERE id = '$foodItemId'";
-  $result = $conn->query($sql);
-  return $result->fetch_assoc();
-}
-
-// Calculate total price
-function calculateTotalPrice($cart)
-{
-  global $conn;
-  $totalPrice = 0;
-  foreach ($cart as $item) {
-    $foodItemId = $item['foodItemId'];
-    $quantity = $item['quantity'];
-    $foodItem = getFoodItemDetails($foodItemId);
-    $totalPrice += $foodItem['price'] * $quantity;
-  }
-  return $totalPrice;
-}
-
-// Display cart contents
-function displayCart()
-{
-  if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-    echo "<ul>";
-    foreach ($_SESSION['cart'] as $item) {
-      $foodItemId = $item['foodItemId'];
-      $quantity = $item['quantity'];
-      $foodItem = getFoodItemDetails($foodItemId);
-      echo "<li>{$foodItem['name']} - Quantity: $quantity</li>";
-    }
-    echo "</ul>";
-    echo "<p>Total Price: $" . calculateTotalPrice($_SESSION['cart']) . "</p>";
-  } else {
-    echo "<p>Your cart is empty.</p>";
-  }
-}
-
-
-// Include other necessary PHP code related to your menu page here
-
-// Example: Fetching data from the menu table
-$sql = "SELECT * FROM menu";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  // Output data of each row
-  while ($row = $result->fetch_assoc()) {
-    echo "Name: " . $row["name"] . " - Price: $" . $row["price"] . "<br>";
-  }
-} else {
-  echo "0 results";
-}
-
-$conn->close();
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -524,7 +430,7 @@ $conn->close();
         </div>
 
         <div class="price">
-          $25 . 99 
+          $25 . 99
         </div>
 
       </div>
