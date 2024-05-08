@@ -1,3 +1,36 @@
+<?php
+session_start();
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "shoping_cart";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addToCart"])) {
+  $foodItemId = $_POST["foodItemId"];
+  $quantity = $_POST["quantity"];
+
+  // Check if item already exists in cart, update quantity
+  if (isset($_SESSION["cart"][$foodItemId])) {
+    $_SESSION["cart"][$foodItemId] += $quantity;
+  } else {
+    // Add new item to cart
+    $_SESSION["cart"][$foodItemId] = $quantity;
+  }
+
+  // Redirect to prevent form resubmission on refresh
+  header("Location: " . $_SERVER["PHP_SELF"]);
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -231,6 +264,7 @@
 
   <div class="menu-container">
     <div class="menu-left">
+
       <div class="food-item">
         <img src="images/06a75e6a8a9db3a1a81df30a29f3c4c8.jpg" alt="Food Item 1">
         <div>
