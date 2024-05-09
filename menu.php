@@ -39,10 +39,10 @@ if (!$conn) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rochester&display=swap" rel="stylesheet">
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  
+
   <title>Menu Page</title>
   <style>
     body {
@@ -246,7 +246,7 @@ if (!$conn) {
       <li><a href="home.html">HOME</a></li>
       <li><a href="#menu">MENU</a></li>
       <li><a href="#reservation">RESERVATION</a></li>
-      <li><a href="#login.php">LOGIN</a></li>
+      <li><a href="cart_display.php">CART</a></li>
     </ul>
   </div>
 

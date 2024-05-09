@@ -21,19 +21,189 @@ if (!$conn) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rancho&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cuprum&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rochester&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <title>My Cart</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.897);
+      padding: 10px 0;
+      height: 70px;
+    }
+
+    .navbar h1 {
+      font-size: 50px;
+      font-family: 'Lilita One', sans-serif;
+      font-weight: 900;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .navbar h1::before,
+    .navbar h1::after {
+      content: "FOODILITE";
+      position: absolute;
+      top: 0;
+      left: 20px;
+      animation: glitter 2s infinite linear;
+      color: transparent;
+    }
+
+    .navbar h1::before {
+      color: rgb(255, 217, 0);
+    }
+
+    @keyframes glitter {
+      0% {
+        transform: translateX(-1px) translateY(-1px);
+      }
+
+      25% {
+        transform: translateX(1px) translateY(1px);
+      }
+
+      50% {
+        transform: translateX(-1px) translateY(-1px);
+      }
+
+      75% {
+        transform: translateX(1px) translateY(1px);
+      }
+
+      100% {
+        transform: translateX(0) translateY(0);
+      }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      margin-right: 35px;
+    }
+
+    .nav-links li {
+      margin-left: 25px;
+      font-size: 20px;
+      font-family: 'Cuprum', sans-serif;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #FFF;
+      font-weight: bold;
+    }
+
+    .nav-links a:hover {
+      color: #FF0000;
+    }
+
+
+    .menu-right {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-title {
+      font-size: 30px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-family: Rochester;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 20px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+
+    .total-btn {
+      text-align: center;
+    }
+  </style>
+
 </head>
 
 <body>
+  <div class="navbar">
+    <h1>FOODILITE</h1>
+    <ul class="nav-links">
+      <li><a href="home.html">HOME</a></li>
+      <li><a href="#menu">MENU</a></li>
+      <li><a href="#reservation">RESERVATION</a></li>
+      <li><a href="cart_display.php">CART</a></li>
+    </ul>
+  </div>
+
   <div class="menu-right">
     <h3 class="cart-title">Shopping Cart</h3>
     <div id="displayCheckout">
-
       <?php
 
       if (!empty($_SESSION['cart'])) {
@@ -45,15 +215,13 @@ if (!$conn) {
           $total = $total + ($value['p_price'] * $value['p_quantity']);
         }
         $outputTable .= "</table>";
-        $outputTable .= "<div class='text-center'><b>Total: " . $total . "</b></div>";
+        $outputTable .= "<div class='total-btn'><b>Total: " . $total . "</b></div>";
 
         echo ($outputTable);
       }
 
       ?>
-
     </div>
-
   </div>
 
 
