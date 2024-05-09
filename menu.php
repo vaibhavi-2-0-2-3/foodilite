@@ -39,10 +39,10 @@ if (!$conn) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rochester&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
   <title>Menu Page</title>
   <style>
     body {
@@ -296,34 +296,6 @@ if (!$conn) {
       ?>
 
 
-
-
-
-      <div class="menu-right">
-        <h3 class="cart-title">Shopping Cart</h3>
-        <div id="displayCheckout">
-
-          <?php
-
-          if (!empty($_SESSION['cart'])) {
-            $outputTable = '';
-            $total = 0;
-            $outputTable .= "<table class='table table-bordered'><thead><tr><td>Name</td><td>Price</td><td>Quantity</td><td>Action</td> </tr></thead>";
-            foreach ($_SESSION['cart'] as $key => $value) {
-              $outputTable .= "<tr><td>" . $value['p_name'] . "</td><td>" . ($value['p_price'] * $value['p_quantity']) . "</td><td>" . $value['p_quantity'] . "</td><td><button id=" . $value['p_id'] . " class='btn btn-danger delete'>Delete</button></td></tr>";
-              $total = $total + ($value['p_price'] * $value['p_quantity']);
-            }
-            $outputTable .= "</table>";
-            $outputTable .= "<div class='text-center'><b>Total: " . $total . "</b></div>";
-
-            echo ($outputTable);
-          }
-
-          ?>
-
-        </div>
-
-      </div>
     </div>
 
 
