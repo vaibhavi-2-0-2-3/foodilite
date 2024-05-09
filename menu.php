@@ -246,7 +246,9 @@ if (!$conn) {
       <li><a href="home.html">HOME</a></li>
       <li><a href="#menu">MENU</a></li>
       <li><a href="#reservation">RESERVATION</a></li>
-      <li><a href="cart_display.php">CART</a></li>
+
+      <li><a href="cart_display.php">MY CART</a></li>
+      <li><a href="#logout">LOGOUT</a></li>
     </ul>
   </div>
 

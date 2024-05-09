@@ -143,7 +143,8 @@ if (!$conn) {
     }
 
     .cart-title {
-      font-size: 30px;
+      font-size: 35px;
+      font-weight: 900;
       margin-bottom: 15px;
       text-align: center;
       font-family: Rochester;
@@ -164,6 +165,10 @@ if (!$conn) {
 
     th {
       background-color: #f2f2f2;
+    }
+
+    .title tr {
+      font-weight: bold;
     }
 
     tr:nth-child(even) {
@@ -197,7 +202,9 @@ if (!$conn) {
       <li><a href="home.html">HOME</a></li>
       <li><a href="#menu">MENU</a></li>
       <li><a href="#reservation">RESERVATION</a></li>
-      <li><a href="cart_display.php">CART</a></li>
+
+      <li><a href="#name">MY CART</a></li>
+      <li><a href="#logout">LOGOUT</a></li>
     </ul>
   </div>
 
@@ -209,7 +216,7 @@ if (!$conn) {
       if (!empty($_SESSION['cart'])) {
         $outputTable = '';
         $total = 0;
-        $outputTable .= "<table class='table table-bordered'><thead><tr><td>Name</td><td>Price</td><td>Quantity</td><td>Action</td> </tr></thead>";
+        $outputTable .= "<table class='table table-bordered'><thead class='title'><tr><td>Name</td><td>Price</td><td>Quantity</td><td>Action</td> </tr></thead>";
         foreach ($_SESSION['cart'] as $key => $value) {
           $outputTable .= "<tr><td>" . $value['p_name'] . "</td><td>" . ($value['p_price'] * $value['p_quantity']) . "</td><td>" . $value['p_quantity'] . "</td><td><button id=" . $value['p_id'] . " class='btn btn-danger delete'>Delete</button></td></tr>";
           $total = $total + ($value['p_price'] * $value['p_quantity']);
