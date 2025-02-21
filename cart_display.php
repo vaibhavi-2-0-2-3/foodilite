@@ -200,8 +200,8 @@ if (!$conn) {
     <h1>FOODILITE</h1>
     <ul class="nav-links">
       <li><a href="home.html">HOME</a></li>
-      <li><a href="#menu">MENU</a></li>
-      <li><a href="#reservation">RESERVATION</a></li>
+      <li><a href="menu.php">MENU</a></li>
+      <!-- <li><a href="#reservation">RESERVATION</a></li> -->
 
       <li><a href="#name">MY CART</a></li>
       <li><a href="#logout">LOGOUT</a></li>
