@@ -4,12 +4,12 @@ Welcome to **Foodilite**, a restaurant management web application that allows us
 
 ## 📌 Features
 
-✅ **User Authentication** - Register & Log in 
-✅ **Menu Display** - Browse a variety of dishes 🍕🥗
-✅ **Cart System** - Add & remove items before checkout 🛒
-✅ **Table Reservations** - Book tables in advance 📅
-✅ **Order Management** - Track and manage orders 🍽️
-✅ **Responsive Design** - Works on mobile & desktop 📱💻
+- ✅ **User Authentication** - Register & Log in
+- ✅ **Menu Display** - Browse a variety of dishes 🍕🥗
+- ✅ **Cart System** - Add & remove items before checkout 🛒
+- ✅ **Table Reservations** - Book tables in advance 📅
+- ✅ **Order Management** - Track and manage orders 🍽️
+- ✅ **Responsive Design** - Works on mobile & desktop 📱💻
 
 ## 🛠️ Technologies Used
 
@@ -32,18 +32,15 @@ Welcome to **Foodilite**, a restaurant management web application that allows us
 
 ## 📸 Screenshots
 
-comming soon
-
 
 
 ## 🔥 Future Improvements
 
-- Implement secure authentication 🔐
 - Add online payment gateway 💳
 - Improve UI/UX 🎨
 - Implement an admin panel for restaurant management ⚙️
 
 ---
 
-Made with ❤️ by [Your Name]
+Made with ❤️
 
