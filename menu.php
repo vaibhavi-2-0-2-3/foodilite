@@ -148,15 +148,6 @@ if (!$conn) {
       font-family: Cuprum, sans-serif;
     }
 
-    .price {
-      margin-left: auto;
-      font-size: 25px;
-      font-family: Euphoria Script;
-      padding-left: 10px;
-      font-weight: bold;
-    }
-
-
     .food-item {
       display: flex;
       align-items: center;
@@ -172,10 +163,12 @@ if (!$conn) {
     }
 
     .price {
+      margin-left: auto;
       font-size: 40px;
       font-family: Euphoria Script;
       padding-left: 5px;
-      padding-right: 700px;
+      padding-right: 70px;
+      font-weight: bold;
     }
 
     .food-item img {
@@ -236,6 +229,41 @@ if (!$conn) {
       font-family: 'Cuprum', sans-serif;
       margin-bottom: 15px;
     }
+
+    .menu-right {
+      width: 35%;
+      /* Increase width */
+      background: #f8e6c0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 20px;
+      height: 500px;
+      margin-right: 20px;
+      margin-left: 40px;
+    }
+
+    .trending-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+
+    .trending-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    h4 {
+      font-size: 20px;
+      font-family: 'Cuprum', sans-serif;
+    }
   </style>
 </head>
 
@@ -245,7 +273,7 @@ if (!$conn) {
     <ul class="nav-links">
       <li><a href="home.html">HOME</a></li>
       <li><a href="#menu">MENU</a></li>
-      <li><a href="#reservation">RESERVATION</a></li>
+      <!-- <li><a href="#reservation">RESERVATION</a></li> -->
 
       <li><a href="cart_display.php">MY CART</a></li>
       <li><a href="#logout">LOGOUT</a></li>
@@ -267,7 +295,7 @@ if (!$conn) {
           <img src="images/<?php echo $row['image'] ?>" alt="Food Item 1">
           <div>
             <h3><?php echo $row['name'] ?></h3>
-            <!-- <p>Bread / Potatoes / Rice</p> -->
+            <p>Bread / Potatoes / Rice</p>
 
 
             <form method="post">
@@ -287,6 +315,11 @@ if (!$conn) {
 
             <input type="hidden" id="name<?php echo $row['id'] ?>" value='<?php echo $row['name'] ?>'>
             <input type="hidden" id="price<?php echo $row['id'] ?>" value='<?php echo $row['price'] ?>'>
+            <div>
+              <span style="font-size: 20px; font-weight: normal; color: #555;">
+                ⭐⭐⭐⭐
+              </span>
+            </div>
           </div>
 
         </div>
@@ -299,6 +332,24 @@ if (!$conn) {
 
 
     </div>
+
+    <div class="menu-right">
+      <h2 class="cart-title" style="font-size: 30px; font-family: 'Cuprum', sans-serif; margin-bottom: 30px;"> Trending Dishes 🔥</h2>
+      <?php
+      $sql_trending = "SELECT * FROM items ORDER BY RAND() LIMIT 4";  // Fetch random 3 dishes
+      $result_trending = mysqli_query($conn, $sql_trending);
+
+      while ($row_trending = mysqli_fetch_assoc($result_trending)) {
+      ?>
+        <div class="trending-item">
+          <img src="images/<?php echo $row_trending['image'] ?>" alt="Trending Dish" class="trending-img">
+          <h4><?php echo $row_trending['name'] ?></h4>
+        </div>
+      <?php
+      }
+      ?>
+    </div>
+
 
 
     <script>
@@ -334,35 +385,46 @@ if (!$conn) {
 
 
 
+        $(document).ready(function() {
+          $('.add').click(function(event) {
+            event.preventDefault(); // Prevent form submission
 
-        $('.add').click(function() {
-          event.preventDefault();
-          var id = $(this).data('id');
-          var name = $('#name' + id).val();
-          var price = $('#price' + id).val();
-          var quantity = $('#quantity' + id).val();
-          $.ajax({
-            url: 'cart.php',
-            method: 'POST',
-            dataType: 'json',
-            data: {
-              cart_id: id,
-              cart_name: name,
-              cart_price: price,
-              cart_quantity: quantity,
-              action: 'add'
-            },
-            success: function(data) {
-              $('#displayCheckout').html(data);
-              alldeleteBtn = document.querySelectorAll('.delete')
-              alldeleteBtn.forEach(onebyone => {
-                onebyone.addEventListener('click', deleteINsession)
-              })
-            }
-          }).fail(function(xhr, textStatus, errorThrown) {
-            alert(xhr.responseText);
+            var id = $(this).data('id');
+            var quantity = $('#quantity' + id).val();
+            var button = $(this); // Store button reference
+
+            $.ajax({
+              url: 'cart.php',
+              method: 'POST',
+              dataType: 'json',
+              data: {
+                cart_id: id,
+                cart_quantity: quantity,
+                action: 'add'
+              },
+              success: function(data) {
+                $('#displayCheckout').html(data);
+
+                // Show "Added!" message on the button
+                button.text("✅ Added!");
+                button.css("background-color", "#28A745"); // Green color
+
+                // Reset text back to "Add to Cart" after 2 seconds
+                //setTimeout(function() {
+                //button.text("Add to Cart");
+                //button.css("background-color", "#28A745"); 
+                //}, 2000);
+              }
+            }).fail(function(xhr, textStatus, errorThrown) {
+              alert("Error: " + xhr.responseText);
+            });
           });
-        })
+        });
+
+
+
+
+
       })
     </script>
 
