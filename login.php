@@ -1,33 +1,68 @@
 <?php
-// Start session
+// Start the session
 session_start();
 
-// Enable error reporting (for debugging)
+// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "food";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Define variables and initialize with empty values
+$email = $password = "";
+$loginMessage = "";
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get user input (not validating for now)
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    // Validate and sanitize user input
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    $password = mysqli_real_escape_string($conn, trim($_POST["password"]));
 
-    // Directly log in the user (bypassing authentication)
-    $_SESSION["user_id"] = 1;  // Dummy user ID
-    $_SESSION["user_name"] = "Guest User";  // Dummy user name
+    // Use prepared statement to prevent SQL injection
+    $sql = "SELECT cust_id, name, password FROM customer WHERE email=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Redirect to home page
-    header("Location: home.html");
-    exit();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        // Retrieve hashed password from the database
+        $hashedPasswordFromDatabase = $row["password"];
+        echo "Hashed Password from Database: $hashedPasswordFromDatabase<br>";
+
+        echo "Entered Password: $password<br>";
+
+        if (password_verify($password, $hashedPasswordFromDatabase)) {
+            // Authentication successful, set session variables
+            $_SESSION["user_id"] = $row["cust_id"];
+            $_SESSION["user_name"] = $row["name"];
+            header("Location: home.html"); // Redirect to the dashboard or home page
+            exit();
+        } else {
+            $loginMessage = "Invalid password";
+        }
+    } else {
+        $loginMessage = "User not found";
+    }
+
+    $stmt->close();  // Close the statement
+    $conn->close();
 }
 ?>
-
-<?php
-if (isset($_GET['logout']) && $_GET['logout'] == 'success') {
-    echo "<p style='color: green; font-weight: bold; text-align: center; margin-top: 40px; font-size: 30px;'> You have logged out successfully ✅</p>";
-}
-?>
-
 
 <!DOCTYPE html>
 <html lang="en">
