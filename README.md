@@ -2,7 +2,7 @@
 
 Welcome to **Foodilite**, a restaurant management web application that allows users to explore menus, place orders, and make reservations effortlessly! 🚀
 
-## 📷 Demo
+## 🎥 Demo
 [![Watch the demo](https://github.com/user-attachments/assets/ffa5fe72-d03e-48e2-9236-1571228bf163)](https://drive.google.com/file/d/1wQlXNuaDey59EBIp9WW926rnAgLikSsl/view?usp=drive_link)
 
 
