@@ -204,7 +204,7 @@ if (!$conn) {
       <!-- <li><a href="#reservation">RESERVATION</a></li> -->
 
       <li><a href="#name">MY CART</a></li>
-      <li><a href="#logout">LOGOUT</a></li>
+      <li><a href="logout.php">LOGOUT</a></li>
     </ul>
   </div>
 
