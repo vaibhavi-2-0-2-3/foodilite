@@ -148,6 +148,7 @@ if (!$conn) {
       font-family: Cuprum, sans-serif;
     }
 
+
     .food-item {
       display: flex;
       align-items: center;
@@ -276,7 +277,7 @@ if (!$conn) {
       <!-- <li><a href="#reservation">RESERVATION</a></li> -->
 
       <li><a href="cart_display.php">MY CART</a></li>
-      <li><a href="#logout">LOGOUT</a></li>
+      <li><a href="logout.php">LOGOUT</a></li>
     </ul>
   </div>
 
@@ -295,7 +296,7 @@ if (!$conn) {
           <img src="images/<?php echo $row['image'] ?>" alt="Food Item 1">
           <div>
             <h3><?php echo $row['name'] ?></h3>
-            <p>Bread / Potatoes / Rice</p>
+            <!-- <p>Bread / Potatoes / Rice</p> -->
 
 
             <form method="post">
@@ -315,6 +316,7 @@ if (!$conn) {
 
             <input type="hidden" id="name<?php echo $row['id'] ?>" value='<?php echo $row['name'] ?>'>
             <input type="hidden" id="price<?php echo $row['id'] ?>" value='<?php echo $row['price'] ?>'>
+
             <div>
               <span style="font-size: 20px; font-weight: normal; color: #555;">
                 ⭐⭐⭐⭐
@@ -329,8 +331,6 @@ if (!$conn) {
       <?php
       }
       ?>
-
-
     </div>
 
     <div class="menu-right">
@@ -349,7 +349,6 @@ if (!$conn) {
       }
       ?>
     </div>
-
 
 
     <script>
@@ -384,43 +383,35 @@ if (!$conn) {
         }
 
 
+        $('.add').click(function(event) {
+          event.preventDefault(); // Prevent default form submission
 
-        $(document).ready(function() {
-          $('.add').click(function(event) {
-            event.preventDefault(); // Prevent form submission
+          var id = $(this).data('id');
+          var name = $('#name' + id).val();
+          var price = $('#price' + id).val();
+          var quantity = $('#quantity' + id).val();
+          var button = $(this); // Store reference to the clicked button
 
-            var id = $(this).data('id');
-            var quantity = $('#quantity' + id).val();
-            var button = $(this); // Store button reference
-
-            $.ajax({
-              url: 'cart.php',
-              method: 'POST',
-              dataType: 'json',
-              data: {
-                cart_id: id,
-                cart_quantity: quantity,
-                action: 'add'
-              },
-              success: function(data) {
-                $('#displayCheckout').html(data);
-
-                // Show "Added!" message on the button
-                button.text("✅ Added!");
-                button.css("background-color", "#28A745"); // Green color
-
-                // Reset text back to "Add to Cart" after 2 seconds
-                //setTimeout(function() {
-                //button.text("Add to Cart");
-                //button.css("background-color", "#28A745"); 
-                //}, 2000);
-              }
-            }).fail(function(xhr, textStatus, errorThrown) {
-              alert("Error: " + xhr.responseText);
-            });
+          $.ajax({
+            url: 'cart.php',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+              cart_id: id,
+              cart_name: name,
+              cart_price: price,
+              cart_quantity: quantity,
+              action: 'add'
+            },
+            success: function(data) {
+              $('#displayCheckout').html(data);
+              button.text('Added ✅'); // Change button text to "Added"
+              button.prop('disabled', true); // Disable button after adding
+            }
+          }).fail(function(xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
           });
         });
-
 
 
 
