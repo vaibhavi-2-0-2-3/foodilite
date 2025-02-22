@@ -30,8 +30,8 @@ Welcome to **Foodilite**, a restaurant management web application that allows us
 5. **Run the project**
    - Open `http://localhost/Foodilite/home.html` in your browser.
 
-## 📸 Screenshots
-
+## 📷 Demo
+[![Watch the demo](https://github.com/user-attachments/assets/ffa5fe72-d03e-48e2-9236-1571228bf163)](https://drive.google.com/file/d/1ZRyAkosjkGUbCwHiyh-28EVguyURViAd/view?usp=drive_link)
 
 
 ## 🔥 Future Improvements
